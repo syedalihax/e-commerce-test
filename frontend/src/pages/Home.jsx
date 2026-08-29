@@ -1,10 +1,12 @@
 import React from 'react'
-import GlassNavbar from '../components/Navbar'
+import AppleNavbar from '../components/Navbar'
+import Mainapple from "../components/Mainapple"
 
 function Home() {
   return (
    <>
-   <GlassNavbar/>
+      <AppleNavbar />
+      <Mainapple/>
    </>
   )
 }
