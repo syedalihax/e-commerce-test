@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "backend": "npm --prefix backend run dev",
-    "frontend": "npm --prefix react_frontend run dev",
+    "frontend": "npm --prefix frontend run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "keywords": [],
