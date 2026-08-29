@@ -1,160 +1,59 @@
-import { useState } from "react";
+// AppleNavbar.jsx
+import React from 'react';
 
-import {
-    FiSearch,
-    FiShoppingCart,
-    FiUser,
-    FiMenu,
-    FiX,
-    FiChevronDown,
-} from "react-icons/fi";
+const navLinks = [
+  'Store', 'Mac', 'iPad', 'iPhone', 'Watch',
+  'Vision', 'AirPods', 'TV & Home', 'Entertainment',
+  'Accessories', 'Support'
+];
 
-const Navbar = () => {
-    const [mobileMenu, setMobileMenu] = useState(false);
+const AppleNavbar = () => {
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-[9999] h-11 bg-white/70 backdrop-blur-xl backdrop-saturate-[180%] border-b border-black/5">
+      <div className="max-w-[1024px] mx-auto h-full flex items-center justify-between px-6 md:px-[22px]">
+        
+        {/* Apple Logo */}
+        <a href="/" className="flex items-center">
+          <svg className="w-[14px] h-[18px] fill-black/80 hover:fill-black transition-colors duration-200" viewBox="0 0 17 21" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 0C12.5 0 10.1 0 8.7 1.5C7.3 3 7.5 5 7.5 5C7.5 5 9.5 5.5 10.8 4C12.1 2.5 12.5 0 12.5 0ZM10.5 6.5C9.5 6.5 8.8 7.2 8 7.2C7.2 7.2 6.5 6.5 5.3 6.5C3.2 6.5 1.2 8.3 1.2 11.3C1.2 14.3 4 18.5 6.2 18.5C7.1 18.5 7.6 17.8 8.7 17.8C9.8 17.8 10.2 18.5 11.2 18.5C13.3 18.5 16 14.2 16 11.2C16 9.5 15.2 8.3 14.2 7.6C13.5 7.1 12.5 6.5 10.5 6.5Z"/>
+          </svg>
+        </a>
 
-    return (
-        <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
+        {/* Nav Links */}
+        <ul className="hidden md:flex items-center gap-7 list-none m-0 p-0">
+          {navLinks.map((link) => (
+            <li key={link}>
+              <a 
+                href={`/${link.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                className="text-[12px] font-normal tracking-tight text-black/80 hover:text-black transition-colors duration-200 no-underline"
+              >
+                {link}
+              </a>
+            </li>
+          ))}
+        </ul>
 
-            {/* Main Navbar */}
-            <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        {/* Icons */}
+        <div className="flex items-center gap-6">
+          {/* Search */}
+          <button className="bg-transparent border-none p-0 cursor-pointer text-black/80 hover:text-black transition-colors duration-200">
+            <svg className="w-[15px] h-[15px]" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.5"/>
+              <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+          </button>
 
-                {/* Logo */}
-                <div className="shrink-0">
-                    <a
-                        href="/"
-                        className="text-2xl font-extrabold tracking-tight text-gray-900"
-                    >
-                        Shop<span className="text-blue-600">Zone</span>
-                    </a>
-                </div>
-
-                {/* Search */}
-                <div className="hidden flex-1 md:block">
-                    <div className="mx-auto flex max-w-xl overflow-hidden rounded-full border border-gray-300 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white">
-
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            className="w-full bg-transparent px-5 py-3 text-sm outline-none"
-                        />
-
-                        <button className="flex items-center justify-center bg-blue-600 px-6 text-white transition hover:bg-blue-700">
-                            <FiSearch size={20} />
-                        </button>
-
-                    </div>
-                </div>
-
-                {/* Desktop Actions */}
-                <div className="hidden items-center gap-5 md:flex">
-
-                    {/* Categories */}
-                    <button className="flex items-center gap-1 text-sm font-medium text-gray-700 transition hover:text-blue-600">
-                        Categories
-                        <FiChevronDown size={16} />
-                    </button>
-
-                    {/* Cart */}
-                    <button className="relative flex items-center gap-2 text-gray-700 transition hover:text-blue-600">
-
-                        <FiShoppingCart size={23} />
-
-                        <span className="text-sm font-medium">
-                            Cart
-                        </span>
-
-                        <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
-                            0
-                        </span>
-
-                    </button>
-
-                    {/* Login */}
-                    <button className="flex items-center gap-2 text-sm font-medium text-gray-700 transition hover:text-blue-600">
-                        <FiUser size={20} />
-                        Login
-                    </button>
-
-                    {/* Register */}
-                    <button className="rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-600">
-                        Register
-                    </button>
-
-                </div>
-
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setMobileMenu(!mobileMenu)}
-                    className="rounded-lg p-2 text-gray-700 hover:bg-gray-100 md:hidden"
-                >
-                    {mobileMenu ? (
-                        <FiX size={25} />
-                    ) : (
-                        <FiMenu size={25} />
-                    )}
-                </button>
-
-            </div>
-
-            {/* Mobile Menu */}
-            {mobileMenu && (
-                <div className="border-t border-gray-200 bg-white px-4 py-5 md:hidden">
-
-                    {/* Mobile Search */}
-                    <div className="mb-5 flex overflow-hidden rounded-full border border-gray-300 bg-gray-50">
-
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            className="w-full bg-transparent px-4 py-3 text-sm outline-none"
-                        />
-
-                        <button className="bg-blue-600 px-5 text-white">
-                            <FiSearch size={19} />
-                        </button>
-
-                    </div>
-
-                    {/* Mobile Links */}
-                    <div className="flex flex-col gap-2">
-
-                        {/* Categories */}
-                        <button className="flex items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 hover:bg-gray-100">
-                            Categories
-                            <FiChevronDown size={17} />
-                        </button>
-
-                        {/* Cart */}
-                        <button className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100">
-
-                            <FiShoppingCart size={20} />
-
-                            Cart
-
-                            <span className="ml-auto rounded-full bg-blue-600 px-2 py-0.5 text-xs text-white">
-                                0
-                            </span>
-
-                        </button>
-
-                        {/* Login */}
-                        <button className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                            <FiUser size={20} />
-                            Login
-                        </button>
-
-                        {/* Register */}
-                        <button className="mt-2 rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-600">
-                            Register
-                        </button>
-
-                    </div>
-
-                </div>
-            )}
-
-        </header>
-    );
+          {/* Bag */}
+          <button className="bg-transparent border-none p-0 cursor-pointer text-black/80 hover:text-black transition-colors duration-200">
+            <svg className="w-[15px] h-[15px]" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 5.5H12.5L13.5 13.5H1.5L2.5 5.5Z" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M5.5 5.5V3.5C5.5 2.5 6.5 1.5 7.5 1.5C8.5 1.5 9.5 2.5 9.5 3.5V5.5" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
 };
 
-export default Navbar;
+export default AppleNavbar;
