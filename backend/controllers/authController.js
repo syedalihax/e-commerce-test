@@ -112,10 +112,10 @@ const login = async (req, res) => {
             message: "invalid email"
         })
     }
-    if(!password){
+    if (!password) {
         return res.status(400).json({
-            success:false,
-            message:"password is required"
+            success: false,
+            message: "password is required"
         })
     }
 
@@ -165,38 +165,51 @@ const login = async (req, res) => {
 }
 
 const logOut = async (req, res) => {
-
-    let token = req.headers.authorization
+    let token = req.headers.authorization;
 
     if (!token) {
         return res.status(400).json({
             success: false,
-            message: "token is require"
-        })
+            message: "token is required"
+        });
     }
-    if(!token.startsWith("Bearer ")){
+
+    if (!token.startsWith("Bearer ")) {
         return res.status(400).json({
-            success:false,
+            success: false,
             message: "token format is invalid"
-        })
+        });
     }
-    token = token.split(" ")[1]
+
+    token = token.split(" ")[1];
 
     try {
-        const removedToken = await TokenModel.create({token})
+        const decoded = jwt.decode(token);
 
-    res.status(200).json({
-        success:true,
-        message: "token blacklisted successfully",
-        token : token
-    })
+        if (!decoded || !decoded.exp) {
+            return res.status(400).json({
+                success: false,
+                message: "invalid token payload"
+            });
+        }
+
+        const expiresAt = new Date(decoded.exp * 1000);
+
+        await TokenModel.create({
+            token,
+            expiresAt
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "token blacklisted successfully"
+        });
     } catch (error) {
-      return res.status(500).json({
-        success:false,
-        message: error.message
-      })  
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
+};
 
-
-}
 module.exports = { register, login, logOut }
