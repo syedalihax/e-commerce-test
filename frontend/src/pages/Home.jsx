@@ -1,10 +1,11 @@
 import React from 'react'
+import GlassNavbar from '../components/Navbar'
 
 function Home() {
   return (
-    <>
-    <h1>Hello World</h1>
-    </>
+   <>
+   <GlassNavbar/>
+   </>
   )
 }
 

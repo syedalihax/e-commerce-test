@@ -15,5 +15,8 @@
   "devDependencies": {
     "concurrently": "^10.0.5",
     "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "lucide-react": "^1.37.0"
   }
 }
