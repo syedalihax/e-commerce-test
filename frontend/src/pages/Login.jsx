@@ -4,15 +4,43 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const LoginUser = (e) => {
+  const LoginUser = async (e) => {
     e.preventDefault();
 
-    console.log({
-      email,
-      password,
-    });
-  };
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/auth/login`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
+      const data = await response.json();
+
+      console.log(data);
+
+      if (!response.ok) {
+        alert(data.message || "Login failed");
+        return;
+      }
+
+      // Access token backend se aa raha ho to
+      localStorage.setItem("accessToken", data.accessToken);
+
+      alert("Login successful!");
+
+      console.log("Logged in user:", data);
+    } catch (error) {
+      console.error(error);
+      alert("Server se connection nahi ho raha");
+    }
+  };
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md">
