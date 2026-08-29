@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "backend": "npm --prefix backend run dev",
-    "old_frontend": "live-server frontend_old",
-    "react_frontend": "npm --prefix react_frontend run dev",
-    "dev": "concurrently \"npm run backend\" \"npm run react_frontend\""
+    "frontend": "npm --prefix react_frontend run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "keywords": [],
   "author": "",
