@@ -140,7 +140,7 @@ const login = async (req, res) => {
         const payload = {
             id: emailExist._id,
         }
-        const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10m" })
+        const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3d" })
 
         res.status(200).json({
             success: true,
